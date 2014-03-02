@@ -4,11 +4,11 @@ import java.io.FileInputStream;
 import java.io.ObjectInputStream;
 import java.util.ArrayList;
 
-import android.content.ContextWrapper;
+import android.support.v4.app.FragmentActivity;
 
 public class FileUtility {
 
-	public static ArrayList<Route> getRouteList(ContextWrapper activity)
+	public static ArrayList<Route> getRouteList(FragmentActivity activity)
 	{
 		ArrayList<Route> routeList = new ArrayList<Route>();
 		try{
