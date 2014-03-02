@@ -18,6 +18,7 @@ public class FileUtility {
 			{
 				Route route = (Route)ois.readObject();
 				routeList.add(route);
+				System.out.println(route);
 			}
 			fis.close();
 			System.out.println(routeList);

@@ -20,6 +20,6 @@ public class Route implements Serializable {
 
 	public String toString()
 	{
-		return source+";"+destination;
+		return source+";"+destination+";"+time;
 	}
 }

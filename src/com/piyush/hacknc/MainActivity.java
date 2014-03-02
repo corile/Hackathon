@@ -5,6 +5,7 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
+import java.util.ArrayList;
 import java.util.Locale;
 
 import android.content.Context;
@@ -34,6 +35,8 @@ public class MainActivity extends FragmentActivity {
 	 */
 	SectionsPagerAdapter mSectionsPagerAdapter;
 	Button addRouteButton;
+	FileOutputStream fos;
+	ObjectOutputStream oos;
 	
 	/**
 	 * The {@link ViewPager} that will host the section contents.
@@ -124,23 +127,53 @@ public class MainActivity extends FragmentActivity {
 	
 	public void addRouteClickListener(View view) throws FileNotFoundException, IOException
 	{
-		Route route = new Route();
+		try{Route route = new Route();
 		EditText editText = (EditText)findViewById(R.id.editText1);
 		route.source = editText.getText().toString();
 		editText = (EditText)findViewById(R.id.editText2);
 		route.destination = editText.getText().toString();
-		editText = (EditText)findViewById(R.id.editText2);
+		editText = (EditText)findViewById(R.id.editText3);
 		route.time = editText.getText().toString();
-		writeObjectToMemory(Constants.SAVEDROUTESFILENAME, route);
+		
+		ArrayList<Route> routeList = FileUtility.getRouteList(this);
+		routeList.add(route);
+		
+		//Need to read and write the whole file again due to some unknow reason
+		//http://stackoverflow.com/questions/9542799/problems-with-i-o-with-android-mostly-objectinputstream
+		writeRouteArrayToMemory(Constants.SAVEDROUTESFILENAME, routeList);
+		System.out.println(route);}catch(Exception e){
+			System.out.println("HOly crap!Something is wrong!");
+			e.printStackTrace();
+		}
+		
+		finish();
+		startActivity(getIntent());
+		refreshRouteListFragment();
 	}
 
-    public void writeObjectToMemory(String filename, Object object) {
-        FileOutputStream fos;
+	private void refreshRouteListFragment()
+	{
+//		FragmentManager manager = getSupportFragmentManager();
+//
+//        if (manager != null)
+//        {
+//            RouteListFragment routeListFrag = (RouteListFragment)manager.findFragmentById(R.id.fragmentItem);
+//
+//            routeListFrag.onResume();
+//        }   
+        mSectionsPagerAdapter.getItem(1).onResume();
+	}
+	
+    public void writeRouteArrayToMemory(String filename, ArrayList<Route> routeArray) {
+        
         try {
-            fos = openFileOutput(filename, Context.MODE_APPEND);
-            ObjectOutputStream os = new ObjectOutputStream(fos);
-            os.writeObject(object);
-            os.close();
+        	
+        	fos = openFileOutput(filename, Context.MODE_PRIVATE);
+            oos = new ObjectOutputStream(fos);
+            for (Route route : routeArray) {
+				oos.writeObject(route);
+			}
+            oos.close();
         } 
         catch (Exception e){
         	System.out.println("Exception while saving route to file."+e);
