@@ -15,7 +15,7 @@ import com.michael.rawr.LatLng;
 import com.rohit.cool.PebbleInterface;
 
 public class NotifyPebbleService extends Service {
-
+	
 	@Override
 	public IBinder onBind(Intent intent) {
 		// TODO Auto-generated method stub
@@ -28,15 +28,12 @@ public class NotifyPebbleService extends Service {
 		super.onStartCommand(intent, flags, startId);
 		
 		Route earliestRoute = getEarliestRoute();
+		if(earliestRoute==null)
+			return START_STICKY;
 		
-		LatLng sourceLatLng = AddressToLatLng.AddressToLatLng(earliestRoute.source);
-		LatLng destinationLatLng = AddressToLatLng.AddressToLatLng(earliestRoute.destination);
-		
-		BusList busList = new BusList(sourceLatLng, destinationLatLng, new Date());   // TODO: Correct the time here
-		List<NextBusTime> nextBusTimeList = busList.getBusStop();		
-		
-		PebbleInterface.sendStringToPebble((ArrayList<NextBusTime>)nextBusTimeList, this);
-		
+		Thread thread = new NetworkServiceThread(earliestRoute,this);
+		thread.start();		
+			
 		AlarmSetter.setNextAlarm(this);
 		
 		System.out.println("That's all folks!");
