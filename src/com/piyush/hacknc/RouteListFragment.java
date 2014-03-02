@@ -1,13 +1,9 @@
 package com.piyush.hacknc;
 
-import java.io.FileInputStream;
-import java.io.ObjectInputStream;
 import java.util.ArrayList;
 
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
-import android.view.LayoutInflater;
-import android.view.ViewGroup;
 import android.widget.ListView;
 
 public class RouteListFragment extends ListFragment {
@@ -31,10 +27,16 @@ public class RouteListFragment extends ListFragment {
 	public void onResume()
 	{
 		super.onResume();
-		routeList.clear();
-		routeList.addAll(FileUtility.getRouteList(getActivity()));
-		System.out.println("Muhahaha");
-		routeAdapter.notifyDataSetChanged();
+		if(routeList!=null)
+		{
+			routeList.clear();
+			routeList.addAll(FileUtility.getRouteList(getActivity()));
+			for(Route item : routeList ){
+				System.out.println(item);
+			}
+			routeAdapter.notifyDataSetChanged();
+		}
+		
 		System.out.println("Another Muhahaha");
 	}
 //	@Override
