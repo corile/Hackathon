@@ -46,6 +46,9 @@ public class MainActivity extends FragmentActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		
+		AlarmSetter.setNextAlarm(this);
+		
 		setContentView(R.layout.activity_main);
 
 		// Create the adapter that will return a fragment for each of the three

@@ -3,14 +3,16 @@ package com.piyush.hacknc;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-
-import com.michael.rawr.AddressToLatLng;
-import com.michael.rawr.BusList;
-import com.michael.rawr.LatLng;
+import java.util.List;
 
 import android.app.Service;
 import android.content.Intent;
 import android.os.IBinder;
+
+import com.michael.rawr.AddressToLatLng;
+import com.michael.rawr.BusList;
+import com.michael.rawr.LatLng;
+import com.rohit.cool.PebbleInterface;
 
 public class NotifyPebbleService extends Service {
 
@@ -31,6 +33,13 @@ public class NotifyPebbleService extends Service {
 		LatLng destinationLatLng = AddressToLatLng.AddressToLatLng(earliestRoute.destination);
 		
 		BusList busList = new BusList(sourceLatLng, destinationLatLng, new Date());   // TODO: Correct the time here
+		List<NextBusTime> nextBusTimeList = busList.getBusStop();		
+		
+		PebbleInterface.sendStringToPebble((ArrayList<NextBusTime>)nextBusTimeList, this);
+		
+		AlarmSetter.setNextAlarm(this);
+		
+		System.out.println("That's all folks!");
 		
 		return START_STICKY;
 	}
@@ -40,8 +49,6 @@ public class NotifyPebbleService extends Service {
 		ArrayList<Route> routeList = FileUtility.getRouteList(this);
 		if(routeList==null||routeList.size()==0)
 			return null;
-		
-		String currentTime = getTimeString();
 		
 		Route earliestRoute = routeList.get(0);
 		for (Route route : routeList) {
