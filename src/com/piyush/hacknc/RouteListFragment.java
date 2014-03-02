@@ -6,8 +6,9 @@ import java.util.ArrayList;
 
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
+import android.view.LayoutInflater;
+import android.view.ViewGroup;
 import android.widget.ListView;
-import com.piyush.hacknc.Route;
 
 public class RouteListFragment extends ListFragment {
 	
@@ -22,10 +23,20 @@ public class RouteListFragment extends ListFragment {
 	    routeList = new ArrayList<Route>();
 	    routeList = getRouteList();
 	    
-	    RouteAdapter adapter = new RouteAdapter(getActivity(),R.layout.routelist, routeList);
-	    setListAdapter(adapter);
+	    routeAdapter = new RouteAdapter(getActivity(),R.layout.routelist, routeList);
+	    setListAdapter(routeAdapter);
 	  }
 	
+	@Override
+	public void onResume()
+	{
+		super.onResume();
+		routeList.clear();
+		routeList.addAll(FileUtility.getRouteList(getActivity()));
+		System.out.println("Muhahaha");
+		routeAdapter.notifyDataSetChanged();
+		System.out.println("Another Muhahaha");
+	}
 //	@Override
 //	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 //
@@ -48,25 +59,6 @@ public class RouteListFragment extends ListFragment {
 //        
 //        routeAdapter.notifyDataSetChanged();
 //	}
-	
-	public ArrayList<Route> getRouteList()
-	{
-		ArrayList<Route> routeList = new ArrayList<Route>();
-		try{
-			FileInputStream fis = getActivity().openFileInput(Constants.SAVEDROUTESFILENAME);
-			ObjectInputStream ois = new ObjectInputStream(fis);
-			while(fis.available()>0)
-			{
-				Route route = (Route)ois.readObject();
-				routeList.add(route);
-			}
-			fis.close();
-			System.out.println(routeList);
-		}catch(Exception e)
-		{
-			System.out.println("Exception occured while reading saved route lists");
-		}
-		return routeList;
-	}
+
 
 }

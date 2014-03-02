@@ -89,7 +89,8 @@ public class MainActivity extends FragmentActivity {
 				fragment = new RouteListFragment();
 				}catch(Exception e)
 				{
-					System.out.println(e);
+					System.out.println("Error while creating second tab");
+					e.printStackTrace();
 				}
 			}
 			else

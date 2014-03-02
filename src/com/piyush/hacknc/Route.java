@@ -11,13 +11,12 @@ public class Route implements Serializable {
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 2L;
 	
 	public String source;
 	public String destination;
-	public Time time_;
 	public String time;	
-	public Day[] days;
+	//public Day[] days;
 
 	public String toString()
 	{
