@@ -9,6 +9,7 @@ import java.net.URLConnection;
 import java.util.Date;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 public class JSONRoute {
@@ -29,18 +30,52 @@ public class JSONRoute {
 	private LatLng origin, dest;
 	private Date leaveTime;
 
+	public JSONRoute() {
+	}
+	
 	public JSONRoute(LatLng origin, LatLng dest, Date leaveTime) {
 		this.origin = origin;
 		this.dest = dest;
 		this.leaveTime = leaveTime;
 	}
+	
+	public void setOrigin(LatLng origin) {
+		this.origin = origin; 
+	}
 
+	public void setDestination(LatLng dest) {
+		this.dest = dest; 
+	}
+	
+	public void setLeaveTune(Date leaveTime) {
+		this.leaveTime = leaveTime;
+	}
+	
+	/* Returns a JSON Object containing the route
+	 * Returns null on failure
+	 */
+	public JSONObject getRoute() {
+		String route = getStrRoute();
+		if(route == null) {
+			return null;
+		}
+		JSONObject json = null;
+		try {
+			json = new JSONObject(route);
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return null;
+		}
+		return json;
+	}
+	
 	/* Retrieves a string from Google's directions API
 	 * This will contain Google's approximation of the
 	 * route for the user to take
 	 * Returns null on failure
 	 */
-	protected String getRoute() {
+	protected String getStrRoute() {
 		/* Attempts to make a connection to Google's API */
 		URLConnection conn;
 		try {
