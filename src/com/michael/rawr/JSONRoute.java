@@ -30,9 +30,24 @@ public class JSONRoute {
 	private LatLng origin, dest;
 	private Date leaveTime;
 
+	public JSONRoute() {
+	}
+	
 	public JSONRoute(LatLng origin, LatLng dest, Date leaveTime) {
 		this.origin = origin;
 		this.dest = dest;
+		this.leaveTime = leaveTime;
+	}
+	
+	public void setOrigin(LatLng origin) {
+		this.origin = origin; 
+	}
+
+	public void setDestination(LatLng dest) {
+		this.dest = dest; 
+	}
+	
+	public void setLeaveTune(Date leaveTime) {
 		this.leaveTime = leaveTime;
 	}
 	
