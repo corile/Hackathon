@@ -13,19 +13,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 public class JSONRoute {
-	public static class LatLng
-	{
-		public LatLng(double lat, double lng) {
-			latitude = lat;
-			longitude = lng;
-		}
-
-		public String toString() {
-			return Double.toString(latitude) + "," + Double.toString(longitude);
-		}
-		public double latitude;
-		public double longitude;
-	};
 
 	private LatLng origin, dest;
 	private Date leaveTime;

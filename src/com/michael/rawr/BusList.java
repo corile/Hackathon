@@ -11,8 +11,6 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import com.michael.rawr.JSONRoute.LatLng;
-
 public class BusList {
 	JSONRoute route;
 	
