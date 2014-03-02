@@ -21,7 +21,7 @@ public class RouteListFragment extends ListFragment {
 	    super.onActivityCreated(savedInstanceState);
 	    
 	    routeList = new ArrayList<Route>();
-	    routeList = getRouteList();
+	    routeList = FileUtility.getRouteList(getActivity());
 	    
 	    routeAdapter = new RouteAdapter(getActivity(),R.layout.routelist, routeList);
 	    setListAdapter(routeAdapter);
