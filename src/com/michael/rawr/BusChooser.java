@@ -3,7 +3,7 @@ package com.michael.rawr;
 import java.util.Date;
 import java.util.List;
 
-import com.michael.rawr.BusList.BusStop;
+import com.piyush.hacknc.NextBusTime;
 
 public class BusChooser {
 	LatLng origin, dest;
@@ -13,10 +13,10 @@ public class BusChooser {
 		this.dest = dest;
 	}
 	
-	List<BusStop> getRoute() {
+	List<NextBusTime> getRoute() {
 		
 		BusList list = new BusList(origin, dest, new Date());
-		List<BusStop> stops = list.getBusStop();
+		List<NextBusTime> stops = list.getBusStop();
 		return stops;
 	}
 }

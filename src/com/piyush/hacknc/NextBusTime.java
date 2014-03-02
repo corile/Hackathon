@@ -2,9 +2,9 @@ package com.piyush.hacknc;
 
 public class NextBusTime {
 	
-	private String busName  = "CM";
-	private int eta = 12;
-	private String stopName = "SN";
+	public String busName  = "CM";
+	public int eta = 12;
+	public String stopName = "SN";
 	
 	public String getBusName() {
 		return busName;

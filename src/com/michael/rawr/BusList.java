@@ -38,7 +38,9 @@ public class BusList {
 				getString("name");
 		String dtime = details.getJSONObject("departure_time").getString("text");
 		SimpleDateFormat sdf = new SimpleDateFormat("hh:mm", Locale.US);
-		stop.eta = sdf.parse(dtime);
+		Date eta = sdf.parse(dtime);
+		Date now = new Date();
+		stop.eta = (int) ((eta.getTime() - now.getTime()) / 60000);
 		/*stop.arriveStop = details.getJSONObject("arrival_stop").
 				getString("name");
 		String atime = details.getJSONObject("arrival_time").getString("text");
