@@ -16,7 +16,8 @@
     android:layout_alignParentBottom="true"
     android:layout_centerHorizontal="true"
     android:layout_marginBottom="18dp"
-    android:text="Add Another Route" />
+    android:text="Add Another Route" 
+    android:onClick="addRouteClickListener"/>
 
 <TextView
     android:id="@+id/textView1"

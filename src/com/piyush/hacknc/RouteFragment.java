@@ -11,8 +11,6 @@ import android.view.ViewGroup;
 
 public class RouteFragment extends Fragment {
 	
-	private static final String SAVEDROUTESFILENAME = "savedRoutes.txt";
-
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
@@ -22,10 +20,5 @@ public class RouteFragment extends Fragment {
 
 	}
 	
-	public void addRouteClickListener(View view)
-	{
-		FileOutputStream fos = openFileOutput(SAVEDROUTESFILENAME, Context.MODE_PRIVATE);
-		fos.write(string.getBytes());
-		fos.close();
-	}
+
 }

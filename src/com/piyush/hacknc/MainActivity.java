@@ -1,8 +1,13 @@
 package com.piyush.hacknc;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Locale;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
@@ -30,6 +35,8 @@ public class MainActivity extends FragmentActivity {
 	 */
 	SectionsPagerAdapter mSectionsPagerAdapter;
 	Button addRouteButton;
+	private static final String SAVEDROUTESFILENAME = "savedRoutes.txt";
+
 	
 	/**
 	 * The {@link ViewPager} that will host the section contents.
@@ -106,6 +113,18 @@ public class MainActivity extends FragmentActivity {
 			}
 			return null;
 		}
+	}
+	
+	public void addRouteClickListener(View view) throws FileNotFoundException, IOException
+	{
+		FileOutputStream fos = openFileOutput(SAVEDROUTESFILENAME, Context.MODE_APPEND);
+		fos.write("Hello world".getBytes());
+		fos.close();
+		FileInputStream fis = openFileInput(SAVEDROUTESFILENAME);
+		byte[] b = new byte[20];
+		fis.read(b, 0, 10);
+		String s = new String(b);
+		System.out.println(s);
 	}
 
 	/**
