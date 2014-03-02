@@ -11,6 +11,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import com.piyush.hacknc.NextBusTime;
+
 public class BusList {
 	JSONRoute route;
 	
@@ -28,25 +30,25 @@ public class BusList {
 		route = new JSONRoute(origin, dest, leaveTime);
 	}
 
-	protected BusStop stepToStops(JSONObject step)
+	protected NextBusTime stepToStops(JSONObject step)
 			throws JSONException, ParseException {
-		BusStop stop = new BusStop();
+		NextBusTime stop = new NextBusTime();
 		JSONObject details = step.getJSONObject("transit_details");
-		stop.departStop = details.getJSONObject("departure_stop").
+		stop.stopName = details.getJSONObject("departure_stop").
 				getString("name");
 		String dtime = details.getJSONObject("departure_time").getString("text");
 		SimpleDateFormat sdf = new SimpleDateFormat("hh:mm", Locale.US);
-		stop.departETA = sdf.parse(dtime);
-		stop.arriveStop = details.getJSONObject("arrival_stop").
+		stop.eta = sdf.parse(dtime);
+		/*stop.arriveStop = details.getJSONObject("arrival_stop").
 				getString("name");
 		String atime = details.getJSONObject("arrival_time").getString("text");
 		stop.arriveETA = sdf.parse(atime);
-		stop.name = details.getJSONObject("line").getString("name");
-		stop.shortname = details.getJSONObject("line").getString("short_name");
+		stop.name = details.getJSONObject("line").getString("name");*/
+		stop.busName = details.getJSONObject("line").getString("short_name");
 		return stop;
 	}
 	
-	public List<BusStop> getBusStop() {
+	public List<NextBusTime> getBusStop() {
 		JSONObject path = route.getRoute();
 		//.routes[0].legs[0].steps[1].travel_mode
 		JSONArray steps = null;
@@ -59,7 +61,7 @@ public class BusList {
 			e.printStackTrace();
 			return null;
 		}
-		List<BusStop> stops = new LinkedList<BusStop>();
+		List<NextBusTime> stops = new LinkedList<NextBusTime>();
 		for(int i = 0; i < steps.length(); i++) {
 			String tmode = null;
 			JSONObject s = null;
