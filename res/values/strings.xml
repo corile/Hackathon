@@ -3,8 +3,8 @@
 
     <string name="app_name">HackNC</string>
     <string name="action_settings">Settings</string>
-    <string name="title_section1">Section 1</string>
-    <string name="title_section2">Section 2</string>
+    <string name="title_section1">Add Route</string>
+    <string name="title_section2">Saved Routes</string>
     <string name="title_section3">Section 3</string>
     <string name="add_route">Add Route</string>
 

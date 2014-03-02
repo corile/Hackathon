@@ -4,7 +4,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.util.ArrayList;
+import java.io.ObjectOutputStream;
 import java.util.Locale;
 
 import android.content.Context;
@@ -18,9 +18,8 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.ListView;
+import android.widget.EditText;
 import android.widget.TextView;
 
 public class MainActivity extends FragmentActivity {
@@ -35,8 +34,6 @@ public class MainActivity extends FragmentActivity {
 	 */
 	SectionsPagerAdapter mSectionsPagerAdapter;
 	Button addRouteButton;
-	private static final String SAVEDROUTESFILENAME = "savedRoutes.txt";
-
 	
 	/**
 	 * The {@link ViewPager} that will host the section contents.
@@ -86,6 +83,15 @@ public class MainActivity extends FragmentActivity {
 			{
 				fragment = new RouteFragment();
 			}
+			else if(position==1)
+			{
+				try{
+				fragment = new RouteListFragment();
+				}catch(Exception e)
+				{
+					System.out.println(e);
+				}
+			}
 			else
 				fragment = new DummySectionFragment();
 			Bundle args = new Bundle();
@@ -117,16 +123,29 @@ public class MainActivity extends FragmentActivity {
 	
 	public void addRouteClickListener(View view) throws FileNotFoundException, IOException
 	{
-		FileOutputStream fos = openFileOutput(SAVEDROUTESFILENAME, Context.MODE_APPEND);
-		fos.write("Hello world".getBytes());
-		fos.close();
-		FileInputStream fis = openFileInput(SAVEDROUTESFILENAME);
-		byte[] b = new byte[20];
-		fis.read(b, 0, 10);
-		String s = new String(b);
-		System.out.println(s);
+		Route route = new Route();
+		EditText editText = (EditText)findViewById(R.id.editText1);
+		route.source = editText.getText().toString();
+		editText = (EditText)findViewById(R.id.editText2);
+		route.destination = editText.getText().toString();
+		editText = (EditText)findViewById(R.id.editText2);
+		route.time = editText.getText().toString();
+		writeObjectToMemory(Constants.SAVEDROUTESFILENAME, route);
 	}
 
+    public void writeObjectToMemory(String filename, Object object) {
+        FileOutputStream fos;
+        try {
+            fos = openFileOutput(filename, Context.MODE_APPEND);
+            ObjectOutputStream os = new ObjectOutputStream(fos);
+            os.writeObject(object);
+            os.close();
+        } 
+        catch (Exception e){
+        	System.out.println("Exception while saving route to file."+e);
+        }
+
+    }
 	/**
 	 * A dummy fragment representing a section of the app, but that simply
 	 * displays dummy text.

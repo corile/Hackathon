@@ -33,7 +33,15 @@
     android:layout_height="wrap_content"
     android:layout_alignLeft="@+id/textView1"
     android:layout_below="@+id/textView1"
-    android:layout_marginTop="16dp"
+    android:ems="10"
+    android:inputType="textPostalAddress" />
+
+<EditText
+    android:id="@+id/editText2"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_alignLeft="@+id/textView2"
+    android:layout_below="@+id/textView2"
     android:ems="10"
     android:inputType="textPostalAddress" >
 
@@ -46,17 +54,23 @@
     android:layout_height="wrap_content"
     android:layout_alignLeft="@+id/editText1"
     android:layout_below="@+id/editText1"
-    android:layout_marginTop="38dp"
     android:text="Destination" />
 
-<EditText
-    android:id="@+id/editText2"
+<TextView
+    android:id="@+id/textView3"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:layout_alignLeft="@+id/textView2"
-    android:layout_below="@+id/textView2"
-    android:layout_marginTop="27dp"
+    android:layout_alignLeft="@+id/editText2"
+    android:layout_below="@+id/editText2"
+    android:text="Time" />
+
+<EditText
+    android:id="@+id/editText3"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_alignLeft="@+id/textView3"
+    android:layout_below="@+id/textView3"
     android:ems="10"
-    android:inputType="textPostalAddress" />
+    android:inputType="time" />
 
 </RelativeLayout>
